@@ -33,13 +33,12 @@ function createItem(item) {
     editButton.addEventListener('click', function () {
         textElement.setAttribute('contenteditable', 'true');
         textElement.focus();
-        saveTasks(items);
     });
 
     textElement.addEventListener('blur', function () {
         textElement.setAttribute('contenteditable', 'false');
-        items = getTasksFromDOM();
-        saveTasks(items);
+        const currentTasks = getTasksFromDOM();
+        saveTasks(currentTasks);
     });
 
     textElement.addEventListener('keydown', function (event) {
@@ -51,16 +50,16 @@ function createItem(item) {
 
     deleteButton.addEventListener('click', function () {
         clone.remove();
-        items = getTasksFromDOM();
-        saveTasks(items);
+        const currentTasks = getTasksFromDOM();
+        saveTasks(currentTasks);
     });
 
     duplicateButton.addEventListener('click', function () {
         const currentTaskText = textElement.textContent;
         const newTaskElement = createItem(currentTaskText);
         listElement.prepend(newTaskElement);
-        items = getTasksFromDOM();
-        saveTasks(items);
+        const currentTasks = getTasksFromDOM();
+        saveTasks(currentTasks);
     });
 
     return clone;
@@ -86,7 +85,7 @@ items = loadTasks();
 
 items.forEach(item => {
     const taskElement = createItem(item);
-    listElement.prepend(taskElement);
+    listElement.append(taskElement);
 });
 
 formElement.addEventListener('submit', function (event) {
